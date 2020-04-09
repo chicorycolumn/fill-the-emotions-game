@@ -163,7 +163,7 @@ video.addEventListener("play", () => {
         context.canvas.width = detect.alignedRect._box._width;
         context.canvas.height = detect.alignedRect._box._height;
 
-        let offset = 10; // 35 is best
+        let offset = 10;
 
         let sourceX = detect.alignedRect._box._x + offset;
         let sourceY = detect.alignedRect._box._y + offset;
