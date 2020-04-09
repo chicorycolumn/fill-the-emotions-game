@@ -19,18 +19,33 @@ body {
 
 .container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 1200px;
   justify-content: center;
 }
 
-canvas {
-  width: 360px;
-  border: yellow solid 5pt;
+#canvas3 {
+  /* width: 360px; */
+  /* border: yellow solid 10pt; */
+  position: relative;
+  z-index: 1;
 }
 
-#photo {
-  border: blue solid 10pt;
+#video {
+  /* border: orange solid 1pt; */
+  position: absolute;
+  z-index: 0;
+}
+
+#videoContainer {
+  /* border: white solid 5pt; */
+}
+
+#canvas2 {
+  width: 360px;
+  border: forestgreen solid 1pt;
+  align-self: center;
+  border-radius: 50%;
 }
 
 .emotions {

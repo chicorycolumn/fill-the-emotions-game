@@ -36,11 +36,13 @@ class App extends React.Component {
           </p>
         </div>
         <div class="container">
-          <video id="video" width="360" height="280" autoPlay muted></video>
+          <div id="videoContainer">
+            <video id="video" width="360" height="280" autoPlay muted></video>
+            <canvas id="canvas3"></canvas>
+          </div>
           <p>➡️➡️</p>
-          <canvas id="canvas2">
-            <div id="photo"></div>
-          </canvas>
+          <canvas id="canvas2"></canvas>
+
           <h1 id="youAre">You are...</h1>
         </div>
       </div>

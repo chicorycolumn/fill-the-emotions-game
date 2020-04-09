@@ -41,12 +41,14 @@ video.addEventListener("play", () => {
 
     //UNCOMMENT OUT THIS IF YOU WANNA SEE SOME COOL LINES.
     // const canvas = faceapi.createCanvasFromMedia(video);
+    const canvas3 = document.getElementById("canvas3");
     // document.body.append(canvas);
-    // const displaySize = { width: video.width, height: video.height };
-    // faceapi.matchDimensions(canvas, displaySize);
-    // const resizedDetections = faceapi.resizeResults(detections, displaySize);
-    // canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
-    // faceapi.draw.drawDetections(canvas, resizedDetections);
+    const displaySize = { width: video.width, height: video.height };
+    faceapi.matchDimensions(canvas3, displaySize);
+    const resizedDetections = faceapi.resizeResults(detections, displaySize);
+    canvas3.getContext("2d").clearRect(0, 0, canvas3.width, canvas3.height);
+    faceapi.draw.drawDetections(canvas3, resizedDetections);
+    // console.log(resizedDetections);
     // faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
     // faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
 
@@ -120,9 +122,13 @@ video.addEventListener("play", () => {
           currentEmotion !== emotion
         ) {
           //User has held this emotion for 2 seconds! Let's take a photo.
-          if (emotionDuration[emotion] === 5) {
+          if (emotionDuration[emotion] === 1) {
+            //SHOULD BE 5
             currentEmotion = emotion;
-            takepicture();
+
+            // takepicture(resizedDetections[0]);
+            takepicture(detections[0]);
+
             emotionDuration[emotion] = 0;
             document.getElementById("youAre").innerText = `You are ${emotion}!`;
           } else {
@@ -151,14 +157,39 @@ video.addEventListener("play", () => {
         }
       });
 
-      function takepicture() {
-        const photo = document.getElementById("photo");
+      function takepicture(detect) {
+        // const photo = document.getElementById("photo");
         var context = canvas2.getContext("2d");
+        context.canvas.width = detect.alignedRect._box._width;
+        context.canvas.height = detect.alignedRect._box._height;
 
-        context.drawImage(video, 0, 0, canvas2.width, canvas2.height);
+        let offset = 10; // 35 is best
+
+        let sourceX = detect.alignedRect._box._x + offset;
+        let sourceY = detect.alignedRect._box._y + offset;
+        let sourceW = detect.alignedRect._box._width - offset * 2;
+        let sourceH = detect.alignedRect._box._height - offset * 2;
+        let drawX = 0;
+        let drawY = 0;
+        let drawW = canvas2.width;
+        let drawH = canvas2.height;
+
+        context.drawImage(
+          video,
+          sourceX,
+          sourceY,
+          sourceW,
+          sourceH,
+          drawX,
+          drawY,
+          drawW,
+          drawH
+        );
 
         var data = canvas2.toDataURL("image/png");
-        photo.setAttribute("src", data);
+
+        const id_canvas2 = document.getElementById("canvas2");
+        id_canvas2.setAttribute("src", data);
       }
     }
   }, 350);
